@@ -1,26 +1,26 @@
 /**
- * Use the Sparkfun Qwiic Twist RGB encoder
+ * Communicate with the Sparkfun Qwiic Twist RGB encoder
  */
 //% color=#007A4B weight=30 icon="\uf0d1"
 namespace twist {
-    enum registers {
-        id = 0,
-        status = 1,
-        version = 2,
-        enableInts = 4,
-        count = 5,
-        difference = 7,
-        lastEncoderEvent = 9,
-        lastButtonEvent = 8,
-        red = 13,
-        green = 14,
-        blue = 15,
-        connectRed = 16,
-        connectGreen = 18,
-        connectBlue = 20,
-        turnIntTimeout = 22,
-        changeAddress = 24,
-        limit = 25
+    enum TwistRegisters {
+        Id = 0,
+        Status = 1,
+        Version = 2,
+        EnableInts = 4,
+        Count = 5,
+        Difference = 7,
+        LastEncoderEvent = 9,
+        LastButtonEvent = 8,
+        Red = 13,
+        Green = 14,
+        Blue = 15,
+        ConnectRed = 16,
+        ConnectGreen = 18,
+        ConnectBlue = 20,
+        TurnIntTimeout = 22,
+        ChangeAddress = 24,
+        Limit = 25
     }
 
     /** Set the RGB color (light up the knob) */
@@ -28,7 +28,7 @@ namespace twist {
     //% blockId=twist_set_color
     //% block="Set color|address%address|red%r|green%g|blue%b"
     export function setColor(address: number, r: number, g: number, b: number): void {
-        pins.i2cWriteNumber(address, registers.red, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(address, TwistRegisters.Red, NumberFormat.UInt8LE, true);
         pins.i2cWriteNumber(address, r, NumberFormat.UInt8LE, true);
         pins.i2cWriteNumber(address, g, NumberFormat.UInt8LE, true);
         pins.i2cWriteNumber(address, b, NumberFormat.UInt8LE, false);
@@ -39,7 +39,7 @@ namespace twist {
     //% blockId=twist_set_red
     //% block="Set red|address%address|red%r"
     export function setRed(address: number, r: number) {
-        pins.i2cWriteNumber(address, registers.red, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(address, TwistRegisters.Red, NumberFormat.UInt8LE, true);
         pins.i2cWriteNumber(address, r, NumberFormat.UInt8LE, false);
     }
 
@@ -48,7 +48,7 @@ namespace twist {
     //% blockId=twist_set_green
     //% block="Set green|address%address|green%g"
     export function setGreen(address: number, g: number) {
-        pins.i2cWriteNumber(address, registers.green, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(address, TwistRegisters.Green, NumberFormat.UInt8LE, true);
         pins.i2cWriteNumber(address, g, NumberFormat.UInt8LE, false);
     }
 
@@ -57,7 +57,7 @@ namespace twist {
     //% blockId=twist_set_blue
     //% block="Set blue|address%address|blue%b"
     export function setBlue(address: number, b: number) {
-        pins.i2cWriteNumber(address, registers.blue, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(address, TwistRegisters.Blue, NumberFormat.UInt8LE, true);
         pins.i2cWriteNumber(address, b, NumberFormat.UInt8LE, false);
     }
 
@@ -66,7 +66,7 @@ namespace twist {
     //% blockId=twist_get_red
     //% block="Get red|address%address"
     export function getRed(address: number): number {
-        pins.i2cWriteNumber(address, registers.red, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Red, NumberFormat.UInt8LE, false);
         return pins.i2cReadNumber(address, NumberFormat.UInt8LE, false);
     }
 
@@ -75,7 +75,7 @@ namespace twist {
     //% blockId=twist_get_green
     //% block="Get green|address%address"
     export function getGreen(address: number): number {
-        pins.i2cWriteNumber(address, registers.green, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Green, NumberFormat.UInt8LE, false);
         return pins.i2cReadNumber(address, NumberFormat.UInt8LE, false);
     }
 
@@ -84,7 +84,7 @@ namespace twist {
     //% blockId=twist_get_blue
     //% block="Get blue|address%address"
     export function getBlue(address: number): number {
-        pins.i2cWriteNumber(address, registers.blue, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Blue, NumberFormat.UInt8LE, false);
         return pins.i2cReadNumber(address, NumberFormat.UInt8LE, false);
     }
 
@@ -93,7 +93,7 @@ namespace twist {
     //% blockId=twist_get_count
     //% block="Get count|address%address"
     export function getCount(address: number): number {
-        pins.i2cWriteNumber(address, registers.count, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Count, NumberFormat.UInt8LE, false);
         return pins.i2cReadNumber(address, NumberFormat.Int16LE);
     }
 
@@ -102,7 +102,7 @@ namespace twist {
     //% blockId=twist_get_limit
     //% block="Get limit|address%address"
     export function getLimit(address: number): number {
-        pins.i2cWriteNumber(address, registers.limit, NumberFormat.Int8LE);
+        pins.i2cWriteNumber(address, TwistRegisters.Limit, NumberFormat.Int8LE);
         return pins.i2cReadNumber(address, NumberFormat.UInt16LE);
     }
 
@@ -111,7 +111,7 @@ namespace twist {
     //% blockId=twist_set_limit
     //% block="Set limit|address%address|limit%limit"
     export function setLimit(address: number, limit: number): void {
-        pins.i2cWriteNumber(address, registers.limit, NumberFormat.Int8LE, true);
+        pins.i2cWriteNumber(address, TwistRegisters.Limit, NumberFormat.Int8LE, true);
         pins.i2cWriteNumber(address, limit, NumberFormat.UInt16LE);
     }
 }
