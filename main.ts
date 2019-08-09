@@ -28,10 +28,8 @@ namespace twist {
     //% blockId=twist_set_color
     //% block="Set color|address%address|red%r|green%g|blue%b"
     export function setColor(address: number, r: number, g: number, b: number): void {
-        pins.i2cWriteNumber(address, TwistRegisters.Red, NumberFormat.UInt8LE, true);
-        pins.i2cWriteNumber(address, r, NumberFormat.UInt8LE, true);
-        pins.i2cWriteNumber(address, g, NumberFormat.UInt8LE, true);
-        pins.i2cWriteNumber(address, b, NumberFormat.UInt8LE, false);
+        let buffer: number = TwistRegisters.Red + 256 * (r + 256 * (g + 256 * b))
+        pins.i2cWriteNumber(address, buffer, NumberFormat.UInt32LE, false);
     }
 
     /** Set red (light up the knob) */
@@ -39,8 +37,7 @@ namespace twist {
     //% blockId=twist_set_red
     //% block="Set red|address%address|red%r"
     export function setRed(address: number, r: number) {
-        pins.i2cWriteNumber(address, TwistRegisters.Red, NumberFormat.UInt8LE, true);
-        pins.i2cWriteNumber(address, r, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Red + 256 * r, NumberFormat.UInt16LE, false);
     }
 
     /** Set green (light up the knob) */
@@ -48,8 +45,7 @@ namespace twist {
     //% blockId=twist_set_green
     //% block="Set green|address%address|green%g"
     export function setGreen(address: number, g: number) {
-        pins.i2cWriteNumber(address, TwistRegisters.Green, NumberFormat.UInt8LE, true);
-        pins.i2cWriteNumber(address, g, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Green + 256 * g, NumberFormat.UInt16LE, false);
     }
 
     /** Set blue (light up the knob) */
@@ -57,8 +53,7 @@ namespace twist {
     //% blockId=twist_set_blue
     //% block="Set blue|address%address|blue%b"
     export function setBlue(address: number, b: number) {
-        pins.i2cWriteNumber(address, TwistRegisters.Blue, NumberFormat.UInt8LE, true);
-        pins.i2cWriteNumber(address, b, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(address, TwistRegisters.Blue + 256 * b, NumberFormat.UInt16LE, false);
     }
 
     /** Get current red value */
